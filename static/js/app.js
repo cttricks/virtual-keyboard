@@ -29,20 +29,51 @@ function requestFullScreen() {
     }
 }
 
+/*
+* Unsupported keys
+* ? ; : ' " { } [ ] \ | ` ~
+* Still finding a way to send these keys too
+*/
+
+const specialKeys = {
+    " ": "spc",
+    "=": "plus",
+    "+": "shift+plus",
+    ".": "period",
+    ">": "shift+period",
+    "-": "minus",
+    "_": "shift+minus",
+    ",": "comma",
+    "<": "shift+comma",
+    "/": "divide",
+    "?": "shift+divide",
+    ")": "shift+0",
+    "!": "shift+1",
+    "@": "shift+2",
+    "#": "shift+3",
+    "$": "shift+4",
+    "%": "shift+5",
+    "^": "shift+6",
+    "&": "shift+7",
+    "*": "shift+8",
+    "(": "shift+9"
+}
+
 function sendKeyboardEvent(e) {
 
-    if(e.inputType == "insertText"){
-        if(e.data == ' ') return sendCommand('sendKey>0x20');
-        if(e.data == '.') return sendCommand('sendKey>0xBE');
-        if(e.data == '@') return sendCommand('sendKey>shift-2');
-        if(e.data == '$') return sendCommand('sendKey>shift-4');
-        if(e.data == '&') return sendCommand('sendKey>shift-7');
-        sendCommand(`sendKey>${e.data}`);
+    let value;
+
+    if (e.inputType == "insertText") {
+        value = e.data;
+        if (value && value === value.toUpperCase() && /[A-Z]/.test(value)) value = `shift+${value}`;
+        if ((specialKeys[value] ?? '').length > 0) value = specialKeys[value];
     }
 
-    if( e.inputType == "deleteContentBackward"){
-        sendCommand(`sendKey>backspace`);
-    }
+    if (e.inputType == "deleteContentBackward") value = `backspace`;
+    if (e.inputType === 'insertLineBreak') value = `enter`;
+
+    // Send command if value is defined
+    if(value) sendCommand(`sendKey>${value}`);
 }
 
 document.addEventListener('click', (e) => {
