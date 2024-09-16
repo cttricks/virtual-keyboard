@@ -104,4 +104,44 @@ document.addEventListener('click', (e) => {
     sendCommand(command);
 });
 
+/*
+* Smart key | tab 
+* Now I can send both keys, tab & shift+tab
+* It is done to add feature to go back to the previous spot using shift+tab key
+*/
+let tabKeyPressStart;
+function tabKeyStartPress(e) {
+    e.preventDefault();
+    tabKeyPressStart = new Date().getTime()
+}
 
+function tabKeyCancelPress() {
+    
+    const tabKey = document.getElementById('tabKey');
+
+    if((new Date().getTime() - tabKeyPressStart) < 350) {
+        let value = (tabKey.getAttribute('data-direction') === 'forward') ? 'tab' : 'shift+tab';
+        return sendCommand(`sendKey>${value}`);
+    }
+
+    // Change Tab action to reverse of current direction
+    if(tabKey.getAttribute('data-direction') === 'forward'){
+        tabKey.setAttribute('data-direction', 'backward');
+        tabKey.querySelector('svg').style.transform = 'rotate(180deg)';
+        return;
+    }
+
+    tabKey.setAttribute('data-direction', 'forward');
+    tabKey.querySelector('svg').style.transform = 'rotate(0deg)';
+    
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const tabKey = document.getElementById('tabKey');
+    if(tabKey){
+        tabKey.addEventListener('mousedown', tabKeyStartPress);
+        tabKey.addEventListener('mouseup', tabKeyCancelPress);
+        tabKey.addEventListener('touchstart', tabKeyStartPress);
+        tabKey.addEventListener('touchend', tabKeyCancelPress);
+    }
+});
