@@ -18,11 +18,11 @@ Here's a rundown of all the nifty features I’ve put together
 | ✅ | Copy | Copies the selected text to the clipboard. Easy-peasy!
 | ✅ | Paste | Pastes text right from the clipboard. Boom, done.
 | ✅ | CMD  | Opens the Windows Command Prompt. Geek mode: activated.
-| ⬜️ | All Apps | Shows a list of all running apps (*Basically, a shortcut for `win + tab`*).
+| ✅ | All Apps | Shows a list of all running apps (*Basically, a shortcut for `win + tab`*).
 | ✅ | Close App | Force quits the current app on Windows (*aka the classic `alt + f4` move*).
 | ✅ | Enter  | Works like pressing the enter key on the keyboard. Handy, right?
 | ✅ | Tab | Acts like hitting the tab button on the keyboard. Press & hold this button for few sec to change tab direction (*forward-backward*). Jump around with ease!
-| ⬜️ | Arrow Keys | Planning to add arrow key ( ⬅️⬆️⬇️➡️ ) support for easier navigation
+| ✅ | Arrow Keys | Planning to add arrow key ( ⬅️⬆️⬇️➡️ ) support for easier navigation
 | 🟨 | Keyboard | Opens up the virtual keyboard on your mobile/tablet/iPad (*But heads up, not all keys sync up perfectly* 😒).
 | ✅ | Notepad  | Launches the Windows Notepad app. Jot down those quick thoughts!
 | ✅ | Chrome  | Opens Chrome (*If no default profile is set, you'll see the profile selector first*).
