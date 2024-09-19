@@ -29,12 +29,6 @@ function requestFullScreen() {
     }
 }
 
-/*
-* Unsupported keys
-* ? ; : ' " { } [ ] \ | ` ~
-* Still finding a way to send these keys too
-*/
-
 const specialKeys = {
     " ": "spc",
     "=": "plus",
@@ -46,7 +40,21 @@ const specialKeys = {
     ",": "comma",
     "<": "shift+comma",
     "/": "divide",
-    "?": "shift+divide",
+    "÷": "divide",
+    "×": "multiply",
+    ";": "0xBA",
+    ":": "shift+0xBA",
+    "?": "shift+0xBF",
+    "`": "0xC0",
+    "~": "shift+0xC0",
+    "[": "0xDB",
+    "{": "shift+0xDB",
+    "]": "0xDD",
+    "}": "shift+0xDD",
+    "'": "0xDE",
+    "\\": "0xDC",
+    "|": "shift+0xDC",
+    "\"": "shift+0xDE",
     ")": "shift+0",
     "!": "shift+1",
     "@": "shift+2",
@@ -76,12 +84,36 @@ function sendKeyboardEvent(e) {
     if(value) sendCommand(`sendKey>${value}`);
 }
 
+function goBackToMainMenu(){
+    document.querySelectorAll('section').forEach(item => item.style.display = 'none');
+    document.querySelector('main').style.display = 'flex';
+}
+
+function switchView(name){
+    document.querySelector('main').style.display = 'none';
+    document.getElementById(name).style.display = 'flex';
+}
+
+function toggleButton(btn, value) {
+    let [a, b] = btn.querySelectorAll('svg');
+    a.style.display = (a.style.display === 'none') ? 'block' : 'none';
+    b.style.display = (b.style.display === 'none') ? 'block' : 'none';
+
+    sendCommand(value);
+}
+
 document.addEventListener('click', (e) => {
+
+    if (e.target.classList.value.includes('back-btn')) return goBackToMainMenu();
 
     if (e.target.tagName !== 'BUTTON') return;
 
+    if (e.target.getAttribute('data-switch-view')) return switchView(e.target.getAttribute('data-switch-view'));
+    
     let command = e.target.getAttribute('data-command');
     if (!command) return;
+
+    if (e.target.getAttribute('data-toggle-button')) return toggleButton(e.target, command);
 
     if (command === 'fullscreen') {
         document.addEventListener('fullscreenchange', handleFullscreenChange);

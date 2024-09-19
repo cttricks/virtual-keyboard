@@ -22,11 +22,12 @@ Here's a rundown of all the nifty features I’ve put together
 | ✅ | Close App | Force quits the current app on Windows (*aka the classic `alt + f4` move*).
 | ✅ | Enter  | Works like pressing the enter key on the keyboard. Handy, right?
 | ✅ | Tab | Acts like hitting the tab button on the keyboard. Press & hold this button for few sec to change tab direction (*forward-backward*). Jump around with ease!
-| ⬜️ | Arrow Keys | Planning to add arrow key ( ⬅️⬆️⬇️➡️ ) support for easier navigation
+| ✅ | Arrow Keys | Add arrow key ( ⬅️⬆️⬇️➡️ ) support for easier navigation
 | 🟨 | Keyboard | Opens up the virtual keyboard on your mobile/tablet/iPad (*But heads up, not all keys sync up perfectly* 😒).
 | ✅ | Notepad  | Launches the Windows Notepad app. Jot down those quick thoughts!
 | ✅ | Chrome  | Opens Chrome (*If no default profile is set, you'll see the profile selector first*).
 | ✅ | GitHub  | Opens [github](https://github.com/cttricks) in Chrome.
+| ✅ | Music  | Control music.
 
 That's what I've added so far! Got more cool ideas? Feel free to share them. Give it a try and don't forget to pass it along to your dev friends! 😎
 

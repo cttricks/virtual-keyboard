@@ -9,14 +9,30 @@ body{
     padding: 1rem;
 }
 
-main{
+main,
+section {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     justify-content: space-between;
 }
 
-main button{
+section {
+    padding-top: 4rem;
+}
+
+section div.back-btn {
+    position: absolute;
+    top: 1.2rem;
+    left: 1rem;
+    background: #9ae103;
+    color: #333;
+    padding: 4px 18px 2px 18px;
+    border-radius: 8px;
+}
+
+main button,
+section button{
     flex: 1;
     padding: 20px;
     border-radius: 6px;
@@ -27,19 +43,23 @@ main button{
     color: #9ae103;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, .4);
     -webkit-tap-highlight-color: transparent;
+}
+
+main button:focus,
+section button:focus {
     outline: none;
 }
 
-main button:focus{
-    outline: none;
-}
-
-main button:active{
+main button:active, 
+section button:active,
+section div.back-btn:active {
     outline: none;
     transform: scale(.9);
 }
 
-main button svg {
+main button svg,
+section button svg,
+section div.back-btn svg {
     pointer-events: none;
 }
 
