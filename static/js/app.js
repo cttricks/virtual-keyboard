@@ -81,15 +81,15 @@ function sendKeyboardEvent(e) {
     if (e.inputType === 'insertLineBreak') value = `enter`;
 
     // Send command if value is defined
-    if(value) sendCommand(`sendKey>${value}`);
+    if (value) sendCommand(`sendKey>${value}`);
 }
 
-function goBackToMainMenu(){
+function goBackToMainMenu() {
     document.querySelectorAll('section').forEach(item => item.style.display = 'none');
     document.querySelector('main').style.display = 'flex';
 }
 
-function switchView(name){
+function switchView(name) {
     document.querySelector('main').style.display = 'none';
     document.getElementById(name).style.display = 'flex';
 }
@@ -102,6 +102,18 @@ function toggleButton(btn, value) {
     sendCommand(value);
 }
 
+async function delay(ms = 100) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sendMultipleKeys(command) {
+    command = command.substring(9).split('|');
+    for (const item of command) {
+        sendCommand(`sendKey>${item}`);
+        await delay(500);
+    }
+}
+
 document.addEventListener('click', (e) => {
 
     if (e.target.classList.value.includes('back-btn')) return goBackToMainMenu();
@@ -109,11 +121,13 @@ document.addEventListener('click', (e) => {
     if (e.target.tagName !== 'BUTTON') return;
 
     if (e.target.getAttribute('data-switch-view')) return switchView(e.target.getAttribute('data-switch-view'));
-    
+
     let command = e.target.getAttribute('data-command');
     if (!command) return;
 
     if (e.target.getAttribute('data-toggle-button')) return toggleButton(e.target, command);
+
+    if (command.includes('sendKeys>')) return sendMultipleKeys(command);
 
     if (command === 'fullscreen') {
         document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -148,16 +162,16 @@ function tabKeyStartPress(e) {
 }
 
 function tabKeyCancelPress() {
-    
+
     const tabKey = document.getElementById('tabKey');
 
-    if((new Date().getTime() - tabKeyPressStart) < 350) {
+    if ((new Date().getTime() - tabKeyPressStart) < 350) {
         let value = (tabKey.getAttribute('data-direction') === 'forward') ? 'tab' : 'shift+tab';
         return sendCommand(`sendKey>${value}`);
     }
 
     // Change Tab action to reverse of current direction
-    if(tabKey.getAttribute('data-direction') === 'forward'){
+    if (tabKey.getAttribute('data-direction') === 'forward') {
         tabKey.setAttribute('data-direction', 'backward');
         tabKey.querySelector('svg').style.transform = 'rotate(180deg)';
         return;
@@ -165,12 +179,12 @@ function tabKeyCancelPress() {
 
     tabKey.setAttribute('data-direction', 'forward');
     tabKey.querySelector('svg').style.transform = 'rotate(0deg)';
-    
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const tabKey = document.getElementById('tabKey');
-    if(tabKey){
+    if (tabKey) {
         tabKey.addEventListener('mousedown', tabKeyStartPress);
         tabKey.addEventListener('mouseup', tabKeyCancelPress);
         tabKey.addEventListener('touchstart', tabKeyStartPress);
