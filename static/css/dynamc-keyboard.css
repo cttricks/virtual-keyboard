@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #fff;
+    padding: 1rem;
+}
+
+/* Header Section */
+header {
+    width: 100%;
+    height: 55px;
+}
+
+header div.control-board{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+header div.control-buttons{
+    display: grid;
+    grid-template-columns: auto repeat(2, 20px);
+    gap: 12px;
+    color: #706c7b;
+}
+
+header div.control-button {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-align: center;
+}
+
+header div.control-button i {
+    font-size: 24px;
+    pointer-events: none;
+}
+
+header div.control-board-title h1{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+header div.control-board-title p{
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    padding-left: 18px;
+    margin-top: 2px;
+}
+
+header div.control-board-title p i{
+    position: absolute;
+    font-size: 16px;
+    margin-right: 4px;
+    left: 0;
+    top: -1px;
+    color: rgb(255, 102, 0);
+}
+header div.control-board-title p i.online{
+    color: #9ae103;
+}
+
+/* Main Section */
+main{
+    height: calc(100vh - 110px);
+    width: 100%;
+    border-radius: 4px;
+}
+
+main section.keyboard-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 6px;
+}
+
+main section.keyboard-section button{
+    flex: 1;
+    padding: 12px;
+    border: none;
+    text-align: center;
+    color: #4f5459;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+main section.keyboard-section button i{
+    pointer-events: none;
+    font-size: 40px;
+    position: relative;
+    top: 4px;
+}
+
+/* Add new button */
+#add-new-button{
+    border: 1px solid #eee;
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 28px #ccc;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+#add-new-button details summary {
+    list-style: none;
+    appearance: none;
+    cursor: pointer; 
+}
+
+#add-new-button h2{
+    font-size: 22px;
+    color: #1d1d23;
+    position: relative;
+    user-select: none;
+    margin-bottom: 12px;
+}
+
+#add-new-button h2 i{
+    position: absolute;
+    font-size: 22px;
+    top: 3px;
+    right: 0;
+}
+
+.form-input input,
+.form-input select {
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: inset 0px 1px 8px #eee;
+    outline: none;
+    background: transparent;
+}
+
+.form-input select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C2.152 5.26 2.392 4.5 2.904 4.5h10.192c.512 0 .752.76.453 1.158l-4.796 5.482a.5.5 0 0 1-.756 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 4px;
+}
+
+.form-input p{
+    font-size: 14px;
+    color: #666;
+    position: relative;
+    padding: 4px;
+}
+
+.form-input p a{
+    text-decoration: underline;
+    color: #81bc04;
+}
+
+.form-input button{
+    margin-top: 24px;
+    background: #9ae103;
+    color: #1d1d23;
+    font-size: 14px;
+    border: 1px solid #81bc04;
+    box-shadow: inset 0px 1px 8px #81bc04;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* toastify */
+.toastify {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
