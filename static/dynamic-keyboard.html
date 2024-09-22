@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/static/css/dynamic-keyboard.css">
-    
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script type="text/javascript" src="/static/js/board-controller.js"></script>
     <script type="text/javascript" src="/static/js/re-arrange-keys.js"></script>
 
@@ -51,23 +49,27 @@
                     <option value="">Choose an event</option>
                     <option value="sendKey">Send Key</option>
                     <option value="openUrl">Open URL</option>
+                    <option value="keyboard">Launch Keyboard</option>
                     <option value="notepad">Notepad</option>
                     <option value="cmd">CMD</option>
                 </select>
 
-                <input type="text" placeholder="Enter value e.g: rwin+e" name="btnValue">
+                <input type="text" placeholder="Enter value e.g: rwin+e" name="btnValue" style="display: none;">
 
                 <input type="text" placeholder="Enter icon name" name="btnIcon">
                 <p><a href="https://fonts.google.com/icons" target="_blank">Click here</a> to view icons list</p>
 
                 <button type="submit">Create</button>
+                <button type="reset">
+                    <i class="material-symbols-outlined">restart_alt</i>
+                </button>
             </form>
         </section>
 
         <section id="default-keyboard" class="keyboard-section" ondragover="allowDrop(event)" ondrop="drop(event)">
 
             <!-- #template
-            <buttons data-command="sendKey>ctrl+c" class="kbc-button kbc-button-lg">
+            <button data-command="sendKey>ctrl+c" class="kbc-button kbc-button-lg">
                 <i class="material-symbols-outlined">content_copy</i>
             </button> -->
 

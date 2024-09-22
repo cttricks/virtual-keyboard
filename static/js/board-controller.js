@@ -1,4 +1,5 @@
 let currentBoard = 'default-keyboard';
+let newButtonForm;
 
 const defaultButtons = [
     { btnIcon: "content_copy", btnEvent: "sendKey", btnValue: "ctrl+c" },
@@ -122,18 +123,19 @@ function toggleSection(target) {
     });
 }
 
-function showToast(message) {
+function showInputError(message, target) {
 
-    if (!message) return;
+    target = document.querySelector(`input[name=${target}], select[name=${target}]`);
+    if (!message || !target) return;
+    
+    let label = document.createElement('label');
+    label.innerText = message;
 
-    Toastify({
-        text: message,
-        duration: 3000,
-        style: {
-            background: "linear-gradient(112.00599690501281deg, rgba(248, 188, 79,1) 4.927083333333334%,rgba(211, 21, 87,1) 97.84374999999999%)",
-            borderRadius: '4px'
-        },
-    }).showToast();
+    newButtonForm.insertBefore(label, target);
+
+    setTimeout(() => {
+        label.remove();
+    }, 1500);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -160,21 +162,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     // Handel create new button form
-    let newButtonForm = document.querySelector('#createNewButton')
+    newButtonForm = document.querySelector('#createNewButton')
     newButtonForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const inputs = Object.fromEntries(formData);
 
-        if (inputs.btnIcon.length < 1) return showToast('Icon is required!');
-        if (inputs.btnEvent.length < 1) return showToast('Choose an event plz!');
-        if (['openUrl', 'sendKey'].includes(inputs.btnEvent) && inputs.btnValue.length < 1) return showToast('Oops! key code/name missing');
+        if (inputs.btnEvent.length < 1) return showInputError('Choose an event plz!', 'btnEvent');
+        if (['openUrl', 'sendKey'].includes(inputs.btnEvent) && inputs.btnValue.length < 1) return showInputError('Oops! key code/name missing', 'btnValue');
+        if (inputs.btnIcon.length < 1) return showInputError('Icon is required!', 'btnIcon');
 
         // Get current board & put this key
         let buttons = localStorage.getItem(currentBoard) ?? '[]';
         buttons = JSON.parse(buttons);
         buttons.push(inputs);
         localStorage.setItem(currentBoard, JSON.stringify(buttons));
+
+        // Reset Form Content
+        newButtonForm.reset();
 
         // Update keyboard
         updateKeyboardKeys();
@@ -185,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     newButtonForm.querySelector('select').addEventListener('change', (e) => {
         let valueInput = newButtonForm.querySelector('input[name=btnValue]');
-        if (['notepad', 'cmd'].includes(e.target.value)) {
+        if (['notepad', 'cmd', 'keyboard'].includes(e.target.value)) {
             valueInput.style.display = 'none';
             return;
         }
