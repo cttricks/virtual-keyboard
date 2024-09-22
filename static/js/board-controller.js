@@ -25,15 +25,51 @@ const updateKeyboardKeys = () => {
     let container = document.getElementById('default-keyboard');
     container.innerHTML = '';
 
+    let count = 1;
     buttons.forEach(item => {
         let button = document.createElement('button');
+        button.id = `btn${count}`;
         button.setAttribute('class', 'kbc-button kbc-button-lg');
         button.setAttribute('data-command', item.btnEvent);
-        if (item.btnValue.length > 0) button.setAttribute('data-command', `${item.btnEvent}>${item.btnValue}`);
+        button.setAttribute('data-json', encodeURIComponent(JSON.stringify(item)));
         button.innerHTML = `<i class="material-symbols-outlined">${item.btnIcon}</i>`;
+        if (item.btnValue.length > 0) button.setAttribute('data-command', `${item.btnEvent}>${item.btnValue}`);
 
         container.appendChild(button);
+        count++;
     });
+}
+
+const switchKeysEditorMode = (elm) => {
+    let icon = elm.querySelector('i');
+
+    if (icon.innerText.includes('_open')) {
+        icon.innerHTML = 'lock';
+        icon.style.color = '#706ca1';
+
+        document.querySelectorAll(`section#${currentBoard} button`).forEach(button => {
+            button.removeAttribute('draggable', 'true');
+            button.removeAttribute('ondragstart', 'dragStart(event)');
+            button.removeAttribute('ondragend', 'dragEnd(event)');
+            button.removeAttribute('ontouchstart', 'touchStart(event)');
+            button.removeAttribute('ontouchmove', 'touchMove(event)');
+            button.removeAttribute('ontouchend', 'touchEnd(event)');
+        });
+
+        return;
+    }
+
+    icon.innerHTML = 'lock_open';
+    icon.style.color = '#FF9800';
+
+    document.querySelectorAll(`section#${currentBoard} button`).forEach(button => {
+        button.setAttribute('draggable', 'true');
+        button.setAttribute('ondragstart', 'dragStart(event)');
+        button.setAttribute('ondragend', 'dragEnd(event)');
+        button.setAttribute('ontouchstart', 'touchStart(event)');
+        button.setAttribute('ontouchmove', 'touchMove(event)');
+        button.setAttribute('ontouchend', 'touchEnd(event)');
+    })
 }
 
 const switchFullScreen = (elm) => {
@@ -76,7 +112,6 @@ const switchFullScreen = (elm) => {
 
 function handleFullscreenChange() {
     if (!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) {
-        //Change Icon
         document.querySelector("div[data-call-func=switchFullScreen] i").innerHTML = 'fullscreen';
     }
 }
@@ -109,6 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // #1 Handel function calls
         let value = e.target.getAttribute('data-call-func');
         if (value && value === 'switchFullScreen') return switchFullScreen(e.target);
+        if (value && value === 'switchKeysEditorMode') return switchKeysEditorMode(e.target);
+
 
         value = e.target.getAttribute('data-toggle-section');
         if (value) return toggleSection(value);
@@ -123,7 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     // Handel create new button form
-    document.querySelector('#createNewButton').addEventListener('submit', (e) => {
+    let newButtonForm = document.querySelector('#createNewButton')
+    newButtonForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const inputs = Object.fromEntries(formData);
@@ -143,6 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Close add button popup
         toggleSection(currentBoard);
+    });
+
+    newButtonForm.querySelector('select').addEventListener('change', (e) => {
+        let valueInput = newButtonForm.querySelector('input[name=btnValue]');
+        if (['notepad', 'cmd'].includes(e.target.value)) {
+            valueInput.style.display = 'none';
+            return;
+        }
+        if (e.target.value === 'sendKey') valueInput.setAttribute('placeholder', 'Enter value e.g: rwin+e');
+        if (e.target.value === 'openUrl') valueInput.setAttribute('placeholder', 'Enter value e.g: https://google.com');
+        valueInput.style.display = 'block';
     });
 
     // Load default keyboard
