@@ -240,3 +240,12 @@ main section.keyboard-section button i{
     top: 2px;
     pointer-events: none;
 }
+
+#hiddenKeyBoard{
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 1px;
+    height: 1px;
+    outline: none;
+}

@@ -148,9 +148,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (value && value === 'switchFullScreen') return switchFullScreen(e.target);
         if (value && value === 'switchKeysEditorMode') return switchKeysEditorMode(e.target);
 
-
+        // #2 Handel Section change
         value = e.target.getAttribute('data-toggle-section');
         if (value) return toggleSection(value);
+
+        // #3 Handel sendKey
+        value = e.target.getAttribute('data-command');
+        if(value){
+            if(value === 'keyboard') {
+                document.getElementById('hiddenKeyBoard').focus();
+                return;
+            }
+            
+            console.log('send command', value)
+        }
 
         console.log('Clicked');
     });
