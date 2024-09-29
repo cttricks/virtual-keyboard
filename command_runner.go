@@ -36,7 +36,7 @@ func execCommand(cmd *exec.Cmd, w http.ResponseWriter) {
 func sendKeyPress(keyCombination string, w http.ResponseWriter) {
 	if runtime.GOOS == "windows" {
 		// Using nircmd to simulate Ctrl+C
-		cmd := exec.Command("./nircmd.exe", "sendkeypress", keyCombination)
+		cmd := exec.Command("./helper/nircmd.exe", "sendkeypress", keyCombination)
 		err := cmd.Run()
 		if err != nil {
 			log.Printf("Failed to execute sendkeypress: %v", keyCombination)
