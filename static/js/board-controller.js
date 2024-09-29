@@ -127,7 +127,7 @@ function showInputError(message, target) {
 
     target = document.querySelector(`input[name=${target}], select[name=${target}]`);
     if (!message || !target) return;
-    
+
     let label = document.createElement('label');
     label.innerText = message;
 
@@ -154,13 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // #3 Handel sendKey
         value = e.target.getAttribute('data-command');
-        if(value){
-            if(value === 'keyboard') {
+        if (value) {
+            if (value === 'keyboard') {
                 document.getElementById('hiddenKeyBoard').focus();
                 return;
             }
-            
-            console.log('send command', value)
+
+            // Send request on local go server to execute this command
+            sendCommand(value);
         }
 
         console.log('Clicked');
@@ -214,3 +215,76 @@ document.addEventListener('DOMContentLoaded', () => {
     updateKeyboardKeys();
 
 });
+
+// Special char won't sync up perfectly 
+// So we need this array to get the exact commands ( to mimic the key press on pc/laptop keyboard )
+// Example: for $ char we press shift + 4 numeric-key on keyboard
+const specialKeys = {
+    " ": "spc",
+    "=": "plus",
+    "+": "shift+plus",
+    ".": "period",
+    ">": "shift+period",
+    "-": "minus",
+    "_": "shift+minus",
+    ",": "comma",
+    "<": "shift+comma",
+    "/": "divide",
+    "÷": "divide",
+    "×": "multiply",
+    ";": "0xBA",
+    ":": "shift+0xBA",
+    "?": "shift+0xBF",
+    "`": "0xC0",
+    "~": "shift+0xC0",
+    "[": "0xDB",
+    "{": "shift+0xDB",
+    "]": "0xDD",
+    "}": "shift+0xDD",
+    "'": "0xDE",
+    "\\": "0xDC",
+    "|": "shift+0xDC",
+    "\"": "shift+0xDE",
+    ")": "shift+0",
+    "!": "shift+1",
+    "@": "shift+2",
+    "#": "shift+3",
+    "$": "shift+4",
+    "%": "shift+5",
+    "^": "shift+6",
+    "&": "shift+7",
+    "*": "shift+8",
+    "(": "shift+9"
+}
+
+// Listen to input event
+function sendKeyboardEvent(e) {
+
+    let value;
+
+    if (e.inputType == "insertText") {
+        value = e.data;
+        if (value && value === value.toUpperCase() && /[A-Z]/.test(value)) value = `shift+${value}`;
+        if ((specialKeys[value] ?? '').length > 0) value = specialKeys[value];
+    }
+
+    if (e.inputType == "deleteContentBackward") value = `backspace`;
+    if (e.inputType === 'insertLineBreak') value = `enter`;
+
+    // Send command if value is defined
+    if (value) sendCommand(`sendKey>${value}`);
+}
+
+// Send commands to local go server
+function sendCommand(value) {
+    fetch('/execute?command=' + value, {
+        method: 'GET'
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Command executed:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error); //
+    });
+}
