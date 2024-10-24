@@ -48,3 +48,20 @@ func sendKeyPress(keyCombination string, w http.ResponseWriter) {
 		http.Error(w, "sendkeypress is not implemented for this OS", http.StatusNotImplemented)
 	}
 }
+
+// To send key press events
+func sendMouseClick(buttonType string, w http.ResponseWriter) {
+	if runtime.GOOS == "windows" {
+		// Using nircmd to simulate Ctrl+C
+		cmd := exec.Command("./helper/nircmd.exe", "sendmouse", buttonType, "click")
+		err := cmd.Run()
+		if err != nil {
+			log.Printf("Failed to execute mouse button click: %v", buttonType)
+			http.Error(w, "Failed to execute mouse button click", http.StatusInternalServerError)
+			return
+		}
+		w.Write([]byte("Executed command"))
+	} else {
+		http.Error(w, "sendkeypress is not implemented for this OS", http.StatusNotImplemented)
+	}
+}

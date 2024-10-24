@@ -164,7 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
             sendCommand(value);
         }
 
-        console.log('Clicked');
+        // #4 Switch page
+        value = e.target.getAttribute('data-toggle-page');
+        if(value) {
+            window.location.href = '/static/mouse.html';
+            return;
+        }
+
     });
 
     //Adding Full Screen Event Listeners

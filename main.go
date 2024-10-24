@@ -6,7 +6,39 @@ import (
 	"net"
 	"net/http"
 	"github.com/skip2/go-qrcode"
+	"os/exec"
+	"strconv"
 )
+
+func moveMouse(w http.ResponseWriter, r *http.Request) {
+    // Parse x and y from query parameters
+    xStr := r.URL.Query().Get("x")
+    yStr := r.URL.Query().Get("y")
+
+	log.Printf("New Mouse Move")
+
+    x, errX := strconv.Atoi(xStr)
+    y, errY := strconv.Atoi(yStr)
+
+    if errX != nil || errY != nil {
+        http.Error(w, "Invalid x or y parameters", http.StatusBadRequest)
+		log.Printf("Failed")
+        return
+    }
+
+    // Construct the nircmd command to move the mouse
+    cmd := exec.Command("./helper/nircmd.exe", "setcursor", fmt.Sprintf("%d", x), fmt.Sprintf("%d", y))
+
+    // Run the command
+    if err := cmd.Run(); err != nil {
+        http.Error(w, "Failed to move mouse", http.StatusInternalServerError)
+        return
+    }
+
+    // Respond with success
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte(fmt.Sprintf("Moved mouse to: (%d, %d)", x, y)))
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Log new connection
@@ -92,6 +124,7 @@ func main() {
 	// Set up the route handlers
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/execute", executeCommand)
+	http.HandleFunc("/move", moveMouse)
 
 	// Construct the URL
 	url := fmt.Sprintf("http://%s:3001", ip)

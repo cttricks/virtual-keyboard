@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #fff;
+    padding: 1rem;
+}
+
+/* Header Section */
+header {
+    width: 100%;
+    height: 55px;
+}
+
+header div.control-board{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+header div.control-buttons{
+    display: grid;
+    grid-template-columns: auto repeat(2, 20px);
+    gap: 12px;
+    color: #706c7b;
+}
+
+header div.control-button {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-align: center;
+}
+
+header div.control-button i {
+    font-size: 24px;
+    pointer-events: none;
+}
+
+header div.control-board-title h1{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+header div.control-board-title p{
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    padding-left: 0px;
+    margin-top: 2px;
+}
+
+header div.control-board-title p i{
+    position: absolute;
+    font-size: 16px;
+    margin-right: 4px;
+    left: 0;
+    top: -1px;
+    color: rgb(255, 102, 0);
+}
+header div.control-board-title p i.online{
+    color: #9ae103;
+}

@@ -8,8 +8,9 @@
     <link rel="icon" href="/static/icons/favicon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
     <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
-    <link rel="stylesheet" href="/static/css/main-board.css">
-    <script type="text/javascript" src="/static/js/board-controller.js?v=1.0"></script>
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/main-board.css?v=0.1">
+    <script type="text/javascript" src="/static/js/board-controller.js?v=1.1"></script>
     <script type="text/javascript" src="/static/js/re-arrange-keys.js"></script>
 
 </head>
@@ -19,12 +20,12 @@
         <div class="control-board">
             <div class="control-buttons">
                 <div class="control-board-title">
-                    <h1>Virtual Keyboard</h1>
-                    <p><i class="material-symbols-outlined online">toll</i>Keyboard &bullet; v1.0.0</p>
+                    <h1>Keyboard</h1>
+                    <p>Virtual Keyboard &bullet; v1.0.1</p>
                 </div>
-
-                <div class="control-button" data-call-func="switchFullScreen">
-                    <i class="material-symbols-outlined">fullscreen</i>
+                
+                <div class="control-button" data-toggle-page="mouse">
+                    <i class="material-symbols-outlined">mouse</i>
                 </div>
 
                 <div class="control-button" data-toggle-section="add-new-button">
@@ -34,6 +35,10 @@
                 <div class="control-button" data-call-func="switchKeysEditorMode">
                     <i class="material-symbols-outlined">lock</i>
                 </div>
+
+                <div class="control-button" data-call-func="switchFullScreen">
+                    <i class="material-symbols-outlined">fullscreen</i>
+                </div>                
             </div>
         </div>
     </header>

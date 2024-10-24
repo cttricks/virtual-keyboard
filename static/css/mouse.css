@@ -1,0 +1,81 @@
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+main div.mouse-buttons{
+    display: grid;
+    grid-template-columns: auto 55px auto;
+    gap: 8px;
+    user-select: none;
+
+    > button {
+        color: transparent;
+        border: none;
+        background: #eee;
+        border-radius: 4px;
+    }
+
+    >div{
+        text-align: center;
+        background: #eee;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        padding: 4px;
+        border-radius: 4px;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            color: #333;
+            pointer-events: none;
+
+            > h2{
+                font-weight: 500;
+                font-size: 20px;
+                pointer-events: none;
+            }
+    
+            >p {
+                margin-top: 4px;
+                font-size: 12px;
+                font-weight: 500;
+                pointer-events: none;
+            }
+        }
+    }
+}
+
+main div.mouse-pad{
+    height: 320px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >div#cursorContainer {
+        width: 320px;
+        height: 320px;
+        background: #eee;
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+
+        > div#cursor {
+            height: 28px;
+            width: 28px;
+            background: transparent;
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+            background: url('/static/icons/cursor-arrow-icon.webp');
+            background-position: center;
+            background-size: contain;
+        }
+    }
+}

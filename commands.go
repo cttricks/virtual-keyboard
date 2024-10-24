@@ -24,6 +24,13 @@ func executeCommandHelper(command string, w http.ResponseWriter) {
 		return
 	}
 
+	// handel openUrl commands | openUrl>chrome://newtab
+	if len(command) > 8 && command[:8] == "mbClick>" {
+		key := command[8:]
+		sendMouseClick(key, w)
+		return
+	}
+
 	// Custom commands
 	switch command {
 		case "cmd":
